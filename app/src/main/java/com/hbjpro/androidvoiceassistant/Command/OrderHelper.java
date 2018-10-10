@@ -2,10 +2,6 @@ package com.hbjpro.androidvoiceassistant.Command;
 
 import com.hbjpro.androidvoiceassistant.Tools.Tools;
 
-/**
- * Created by bassa on 26/06/2018.
- */
-
 public class OrderHelper extends CommandBuilder {
     private Tools.LanguageCode _languageCode;
 

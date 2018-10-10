@@ -3,10 +3,6 @@ package com.hbjpro.androidvoiceassistant.Speech
 import android.util.Log
 import com.hbjpro.androidvoiceassistant.Tools.Tools
 
-/**
- * Created by bassamhbj
- */
-
 class ProcessSpeech {
 
     companion object {

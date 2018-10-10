@@ -4,10 +4,6 @@ import com.hbjpro.androidvoiceassistant.Tools.Tools;
 
 import java.util.HashMap;
 
-/**
- * Created by bassa on 26/06/2018.
- */
-
 // More than one word for one order, next version
 
 public class CommandBuilder {

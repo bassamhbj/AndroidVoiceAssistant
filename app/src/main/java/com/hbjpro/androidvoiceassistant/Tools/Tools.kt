@@ -1,9 +1,5 @@
 package com.hbjpro.androidvoiceassistant.Tools
 
-/**
- * Created by bassamhbj
- */
-
 class Tools {
     enum class LanguageCode{
         ENGLISH_AMERICA,

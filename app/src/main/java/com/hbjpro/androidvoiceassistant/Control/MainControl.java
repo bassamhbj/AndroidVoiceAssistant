@@ -6,10 +6,6 @@ import com.hbjpro.androidvoiceassistant.Model.ModelInternet;
 import com.hbjpro.androidvoiceassistant.Model.ModelSpeech;
 import com.hbjpro.androidvoiceassistant.Tools.Tools;
 
-/**
- * Created by bassamhbj on 26/11/2017.
- */
-
 public class MainControl {
     private MainActivity mainContext;
     private ModelSpeech modelSpeech;

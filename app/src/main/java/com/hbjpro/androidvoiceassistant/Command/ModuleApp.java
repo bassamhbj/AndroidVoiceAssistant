@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 
-import com.hbjpro.androidvoiceassistant.Tools.GlobalState;
+import com.hbjpro.androidvoiceassistant.SubApplication;
 
 import java.util.Iterator;
 import java.util.List;
@@ -14,7 +14,7 @@ public class ModuleApp {
     private List<ApplicationInfo> _listApp;
 
     public ModuleApp(){
-        _packageManager = GlobalState.getInstance().getContext().getPackageManager();
+        _packageManager = SubApplication.Companion.getInstance().getPackageManager();
         _listApp = _packageManager.getInstalledApplications(PackageManager.GET_META_DATA);
     }
 

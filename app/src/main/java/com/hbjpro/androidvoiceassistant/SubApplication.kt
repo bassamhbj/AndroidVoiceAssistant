@@ -1,14 +1,16 @@
 package com.hbjpro.androidvoiceassistant
 
 import android.app.Application
-import com.hbjpro.androidvoiceassistant.Tools.GlobalState
+import android.content.Context
 
-/**
- * Created by bassa on 13/08/2018.
- */
 class SubApplication : Application() {
+    companion object {
+        lateinit var instance: Context
+            private set
+    }
+
     override fun onCreate() {
         super.onCreate()
-        GlobalState.getInstanceWithContext(applicationContext)
+        instance = this
     }
 }

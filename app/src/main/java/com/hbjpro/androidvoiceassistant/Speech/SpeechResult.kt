@@ -2,9 +2,6 @@ package com.hbjpro.androidvoiceassistant.Speech
 
 import com.hbjpro.androidvoiceassistant.Tools.Tools
 
-/**
- * Created by bassamhbj on 22/07/2018.
- */
 data class SpeechResult(
         var message: String, // Speech input full text
         var isKeyWord: Boolean, // If Speech input is an order

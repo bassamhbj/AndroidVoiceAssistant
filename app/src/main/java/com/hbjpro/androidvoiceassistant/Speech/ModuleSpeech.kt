@@ -9,10 +9,6 @@ import android.speech.SpeechRecognizer
 import android.util.Log
 import com.hbjpro.androidvoiceassistant.Tools.Tools
 
-/**
- * Created by bassamhbj
- */
-
 class ModuleSpeech(val context: Context, val speechManager: SpeechManager) {
 
     companion object {

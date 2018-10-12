@@ -2,8 +2,8 @@ package com.hbjpro.androidvoiceassistant.Speech
 
 import android.content.Context
 import com.hbjpro.androidvoiceassistant.Interface.OnSpeechResult
-import com.hbjpro.androidvoiceassistant.Model.ModelSpeech
 import com.hbjpro.androidvoiceassistant.Tools.Tools
+import com.hbjpro.androidvoiceassistant.Model.ModelSpeech
 
 class SpeechManager(val languageCode: Tools.LanguageCode, val modelSpeech: ModelSpeech) : OnSpeechResult {
 

@@ -86,7 +86,6 @@ class ModuleSpeech(val context: Context, val speechManager: SpeechManager) {
     }
 
     /* --- Private Methods --- */
-    // error string file
     private fun getErrorMsg(error:Int) =
             when(error){
                 SpeechRecognizer.ERROR_AUDIO -> "Audio recording error."

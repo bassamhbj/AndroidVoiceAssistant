@@ -18,7 +18,7 @@ class ModelSpeech(val main: MainActivity) : OnSpeechManager, OnOrderResult {
     }
 
     /* --- OnSpeechManager --- */
-    override fun onSpeechManagerFinish(speechResult: SpeechResult?) {
+    override fun onSpeechManagerFinish(speechResult: SpeechResult) {
         var commandManager = CommandManager(this)
         commandManager.executeCommand(speechResult)
     }

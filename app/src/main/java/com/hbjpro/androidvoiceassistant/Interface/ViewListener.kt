@@ -4,5 +4,5 @@ import android.content.Intent
 
 interface ViewListener {
     fun setResultText(text: String)
-    fun onOpenAppSuccess(appLaunchIntent: Intent)
+    fun onOpenAppSuccess(appLaunchIntent: Intent?)
 }

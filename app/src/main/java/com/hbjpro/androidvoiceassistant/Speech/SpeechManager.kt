@@ -25,7 +25,7 @@ class SpeechManager(val languageCode: Tools.LanguageCode, val modelSpeech: Model
         modelSpeech.onSpeechManagerFinish(speechResult)
     }
 
-    override fun onSpeechError(errorMsg: String?) {
+    override fun onSpeechError(errorMsg: String) {
 
     }
 }

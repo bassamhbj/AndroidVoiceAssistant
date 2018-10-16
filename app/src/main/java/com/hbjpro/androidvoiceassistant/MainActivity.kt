@@ -9,8 +9,6 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import com.hbjpro.androidvoiceassistant.Command.ModuleApp
-
 import com.hbjpro.androidvoiceassistant.Control.MainControl
 import com.hbjpro.androidvoiceassistant.Interface.ViewListener
 import com.hbjpro.androidvoiceassistant.Tools.Tools
@@ -45,7 +43,7 @@ class MainActivity : AppCompatActivity(), ViewListener  {
     }
 
     /* --- Override Methods --- */
-    override fun setResultText(text: String?) {
+    override fun setResultText(text: String) {
         val _textView:TextView = findViewById(R.id.textView1)
         _textView.text = text
     }
@@ -54,4 +52,5 @@ class MainActivity : AppCompatActivity(), ViewListener  {
         if(appLaunchIntent != null)
             startActivity(appLaunchIntent)
     }
+
 }

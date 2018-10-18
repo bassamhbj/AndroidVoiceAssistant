@@ -64,16 +64,15 @@ class ModuleSpeech(val context: Context, val speechManager: SpeechManager) {
 
             override fun onError(error: Int) {
                 Log.d(TAG, "Error")
-                speechManager.onSpeechError(getErrorMsg(error))
+                var err = getErrorMsg(error)
+                speechManager.onSpeechError(err)
+                Log.d(TAG, err)
             }
 
             override fun onResults(results: Bundle?) {
                 Log.d(TAG, "Getting Results")
                 val speechResult = results!!.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)[0]
                 Log.d(TAG, "Results: " + speechResult)
-
-                val obj = ProcessSpeech()
-                obj.processText(speechResult, _languageCode)
 
                 speechManager.onSpeechSuccess(
                         with(ProcessSpeech()){

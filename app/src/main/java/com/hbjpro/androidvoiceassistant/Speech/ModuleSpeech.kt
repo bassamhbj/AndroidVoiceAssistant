@@ -9,7 +9,7 @@ import android.speech.SpeechRecognizer
 import android.util.Log
 import com.hbjpro.androidvoiceassistant.Tools.Tools
 
-class ModuleSpeech(val context: Context, val speechManager: SpeechManager) {
+class ModuleSpeech(val context: Context) {
 
     companion object {
         val TAG = ModuleSpeech::class.simpleName
@@ -32,7 +32,7 @@ class ModuleSpeech(val context: Context, val speechManager: SpeechManager) {
         _speechRecognizer.startListening(intent)
     }
 
-    fun startSpeechRecognizer(){
+    fun startSpeechRecognizer(speechCallback: SpeechCallback){
         _speechRecognizer.setRecognitionListener(object : RecognitionListener{
             override fun onReadyForSpeech(params: Bundle?) {
                 Log.d(TAG, "Ready for Speech")
@@ -65,8 +65,8 @@ class ModuleSpeech(val context: Context, val speechManager: SpeechManager) {
             override fun onError(error: Int) {
                 Log.d(TAG, "Error")
                 var err = getErrorMsg(error)
-                speechManager.onSpeechError(err)
-                Log.d(TAG, err)
+                Log.d(TAG, "Error: " + err)
+                speechCallback.onSpeechError(err)
             }
 
             override fun onResults(results: Bundle?) {
@@ -74,7 +74,7 @@ class ModuleSpeech(val context: Context, val speechManager: SpeechManager) {
                 val speechResult = results!!.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)[0]
                 Log.d(TAG, "Results: " + speechResult)
 
-                speechManager.onSpeechSuccess(
+                speechCallback.onSpeechSuccess(
                         with(ProcessSpeech()){
                             processText(speechResult, _languageCode)
                         }
@@ -98,4 +98,9 @@ class ModuleSpeech(val context: Context, val speechManager: SpeechManager) {
                 SpeechRecognizer.ERROR_SPEECH_TIMEOUT -> "No speech input."
                 else -> ""
             }
+
+    interface SpeechCallback{
+        fun onSpeechSuccess(speechResult: SpeechResult)
+        fun onSpeechError(errorMsg: String)
+    }
 }

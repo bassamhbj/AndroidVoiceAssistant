@@ -1,6 +1,6 @@
 package com.hbjpro.androidvoiceassistant.Command
 
-import com.hbjpro.androidvoiceassistant.Model.ModelSpeech
+import com.hbjpro.androidvoiceassistant.model.ModelSpeech
 import com.hbjpro.androidvoiceassistant.Speech.SpeechResult
 import com.hbjpro.androidvoiceassistant.Tools.Tools
 
@@ -18,11 +18,11 @@ class CommandManager(val modelSpeech: ModelSpeech) {
             Tools.OrderTy.OPEN_APP -> {
                 var moduleApp = ModuleApp()
                 var intent = moduleApp.getAppLaunchIntent(commandArgument)
-                if(intent != null){
-                    modelSpeech.onGetLaunchIntentSuccess(intent)
-                }else{
-                    modelSpeech.onGetLaunchIntentError()
-                }
+//                if(intent != null){
+//                    modelSpeech.onGetLaunchIntentSuccess(intent)
+//                }else{
+//                    modelSpeech.onGetLaunchIntentError()
+//                }
             }
             Tools.OrderTy.SEARCH_INTERNET -> {
                 var moduleInternet = ModuleInternet()

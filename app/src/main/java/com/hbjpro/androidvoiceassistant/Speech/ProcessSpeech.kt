@@ -1,6 +1,7 @@
 package com.hbjpro.androidvoiceassistant.Speech
 
 import android.util.Log
+import com.hbjpro.androidvoiceassistant.Command.CommandBuilder
 import com.hbjpro.androidvoiceassistant.Tools.Tools
 
 class ProcessSpeech {
@@ -32,4 +33,14 @@ class ProcessSpeech {
         Log.d(TAG, commandArgument)
         return commandArgument
     }
+
+//    fun processText2(text:String, languageCode: Tools.LanguageCode){
+//        var keyWord = Tools().getKeyWord(languageCode)
+//        var commandMap = CommandBuilder().createMapOrder(languageCode)
+//
+//    }
+//
+//    private fun getRegexString(keyWord: String, commandMap: HashMap<String, Tools.OrderTy>): String{
+//        var commandWord = commandMap.forEach { it -> it.key + "|"  }
+//    }
 }

@@ -12,10 +12,11 @@ import android.widget.Toast
 import com.hbjpro.androidvoiceassistant.Control.MainControl
 import com.hbjpro.androidvoiceassistant.Interface.ViewListener
 import com.hbjpro.androidvoiceassistant.Tools.Tools
+import com.hbjpro.androidvoiceassistant.presenter.MainViewPresent
 
-class MainActivity : AppCompatActivity(), ViewListener  {
+class MainActivity : AppCompatActivity(), MainViewPresent.MainViewListener  {
 
-    private var _mainControl = MainControl(this)
+    private val _presenter = MainViewPresent(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,7 +26,7 @@ class MainActivity : AppCompatActivity(), ViewListener  {
         val button1:Button = findViewById(R.id.button1)
 
         button1.setOnClickListener(View.OnClickListener {
-            _mainControl.doSpeechRecognition(Tools.LanguageCode.ENGLISH_AMERICA)
+            _presenter.doSpeechRecognition(Tools.LanguageCode.ENGLISH_AMERICA)
         })
     }
 
@@ -43,14 +44,13 @@ class MainActivity : AppCompatActivity(), ViewListener  {
     }
 
     /* --- Override Methods --- */
-    override fun setResultText(text: String) {
+    override fun onSpeechResultSuccess(speechText: String) {
         val _textView:TextView = findViewById(R.id.textView1)
-        _textView.text = text
+        _textView.text = speechText
     }
 
-    override fun onOpenAppSuccess(appLaunchIntent: Intent?) {
-        if(appLaunchIntent != null)
-            startActivity(appLaunchIntent)
+    override fun onSpeechResultError(errorMsg: String) {
+        val _textView:TextView = findViewById(R.id.textView1)
+        _textView.text = errorMsg
     }
-
 }

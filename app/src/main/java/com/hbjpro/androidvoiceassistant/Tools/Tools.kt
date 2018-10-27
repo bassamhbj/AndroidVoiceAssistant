@@ -19,10 +19,4 @@ class Tools {
         LanguageCode.SPANISH -> "es-ES"
         LanguageCode.JAPANESE -> "ja-JP"
     }
-
-    fun getKeyWord(code: LanguageCode) = when(code){
-        LanguageCode.ENGLISH_AMERICA -> "voice"
-        LanguageCode.SPANISH -> "voz"
-        LanguageCode.JAPANESE -> "声"
-    }
 }

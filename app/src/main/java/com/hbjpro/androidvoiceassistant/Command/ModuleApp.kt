@@ -10,7 +10,7 @@ class ModuleApp {
     private var _listApp: List<ApplicationInfo>
 
     init {
-        _packageManager = SubApplication.Companion.instance.packageManager
+        _packageManager = SubApplication.instance.packageManager
         _listApp = _packageManager.getInstalledApplications(PackageManager.GET_META_DATA)
     }
 

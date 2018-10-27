@@ -12,14 +12,14 @@ class ProcessSpeech {
 
     /* --- Public Methods --- */
     fun processText(text:String, languageCode: Tools.LanguageCode): SpeechResult{
-        var speechResult = SpeechResult(text, false, "", "", languageCode)
+        var speechResult = SpeechResult(text, false, "", Tools.CommandTy.INVALID, "", languageCode)
 
-        var keyWord = Tools().getKeyWord(languageCode)
         var commandBuilder = CommandBuilder().apply {
             createMapOrder(languageCode)
         }
 
-        var regex = Regex(getRegexString(keyWord, commandBuilder._mapOrder), RegexOption.IGNORE_CASE)
+        var regexStr = getRegexString(commandBuilder.getKeyWord(languageCode), commandBuilder._mapOrder)
+        var regex = Regex(regexStr, RegexOption.IGNORE_CASE)
 
         if(regex.containsMatchIn(text)){
             speechResult.isKeyWord = true

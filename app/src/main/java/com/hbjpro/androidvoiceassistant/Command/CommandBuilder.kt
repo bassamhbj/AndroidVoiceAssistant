@@ -20,6 +20,12 @@ open class CommandBuilder {
         }
     }
 
+    fun getKeyWord(code: Tools.LanguageCode) = when(code){
+        Tools.LanguageCode.ENGLISH_AMERICA -> "voice"
+        Tools.LanguageCode.SPANISH -> "voz"
+        Tools.LanguageCode.JAPANESE -> "声"
+    }
+
     /* --- Protected Methods --- */
     fun findOrder(order:String):Tools.CommandTy{
         return _mapOrder.getOrElse(order, {Tools.CommandTy.INVALID} )

@@ -9,8 +9,6 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import com.hbjpro.androidvoiceassistant.Control.MainControl
-import com.hbjpro.androidvoiceassistant.Interface.ViewListener
 import com.hbjpro.androidvoiceassistant.Tools.Tools
 import com.hbjpro.androidvoiceassistant.presenter.MainViewPresent
 

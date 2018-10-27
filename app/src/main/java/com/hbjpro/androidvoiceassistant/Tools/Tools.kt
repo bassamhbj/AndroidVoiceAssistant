@@ -7,7 +7,7 @@ class Tools {
         JAPANESE
     }
 
-    enum class OrderTy{
+    enum class CommandTy{
         OPEN_APP,
         SEARCH_INTERNET,
         INVALID

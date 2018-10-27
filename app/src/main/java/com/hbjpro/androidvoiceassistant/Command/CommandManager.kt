@@ -8,14 +8,13 @@ class CommandManager(val modelSpeech: ModelSpeech) {
 
     /* --- Public Methods --- */
     fun executeCommand(speechResult: SpeechResult){
-        var orderTy = getOrderTy(speechResult.command, speechResult.languageCode)
-        doExecuteCommand(orderTy, speechResult.commandArgument)
+        doExecuteCommand(speechResult.commandTy, speechResult.commandArgument)
     }
 
     /* --- Private Methods --- */
-    private fun doExecuteCommand(orderTy: Tools.OrderTy, commandArgument: String){
-        when(orderTy){
-            Tools.OrderTy.OPEN_APP -> {
+    private fun doExecuteCommand(commandTy: Tools.CommandTy, commandArgument: String){
+        when(commandTy){
+            Tools.CommandTy.OPEN_APP -> {
                 var moduleApp = ModuleApp()
                 var intent = moduleApp.getAppLaunchIntent(commandArgument)
 //                if(intent != null){
@@ -24,15 +23,10 @@ class CommandManager(val modelSpeech: ModelSpeech) {
 //                    modelSpeech.onGetLaunchIntentError()
 //                }
             }
-            Tools.OrderTy.SEARCH_INTERNET -> {
+            Tools.CommandTy.SEARCH_INTERNET -> {
                 var moduleInternet = ModuleInternet()
             }
-            Tools.OrderTy.INVALID -> return
+            Tools.CommandTy.INVALID -> return
         }
-    }
-
-    private fun getOrderTy(command: String, languageCode: Tools.LanguageCode): Tools.OrderTy{
-        var helper = OrderHelper(languageCode)
-        return helper.getOrder(command)
     }
 }

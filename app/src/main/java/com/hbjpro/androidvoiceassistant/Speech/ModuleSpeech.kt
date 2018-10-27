@@ -70,9 +70,9 @@ class ModuleSpeech(val context: Context) {
             }
 
             override fun onResults(results: Bundle?) {
-                Log.d(TAG, "Getting Results")
+                //Log.d(TAG, "Getting Results")
                 val speechResult = results!!.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)[0]
-                Log.d(TAG, "Results: " + speechResult)
+                //Log.d(TAG, "Results: " + speechResult)
 
                 speechCallback.onSpeechSuccess(
                         with(ProcessSpeech()){

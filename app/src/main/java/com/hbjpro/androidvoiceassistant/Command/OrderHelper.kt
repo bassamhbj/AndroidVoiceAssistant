@@ -9,7 +9,7 @@ class OrderHelper(var languageCode: Tools.LanguageCode) : CommandBuilder() {
     }
 
     /* --- Public Methods --- */
-    fun getOrder(order: String): Tools.OrderTy{
+    fun getCommandTy(order: String): Tools.CommandTy{
         return super.findOrder(order)
     }
 

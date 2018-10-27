@@ -11,36 +11,37 @@ class ProcessSpeech {
     }
 
     /* --- Public Methods --- */
-    fun processText(text:String, languageCode: Tools.LanguageCode) : SpeechResult =
-        SpeechResult("", false, "", "", languageCode).apply{
-            val commandWords = getWords(text)
-            isKeyWord = isKeyWordCheck(commandWords[0], languageCode)
-            if(isKeyWord){
-                command = commandWords[1]
-                commandArgument = getCommandArgument(commandWords)
+    fun processText(text:String, languageCode: Tools.LanguageCode): SpeechResult{
+        var speechResult = SpeechResult(text, false, "", "", languageCode)
+
+        var keyWord = Tools().getKeyWord(languageCode)
+        var commandBuilder = CommandBuilder().apply {
+            createMapOrder(languageCode)
+        }
+
+        var regex = Regex(getRegexString(keyWord, commandBuilder._mapOrder), RegexOption.IGNORE_CASE)
+
+        if(regex.containsMatchIn(text)){
+            speechResult.isKeyWord = true
+            var result: kotlin.text.MatchResult? = regex.find(text)
+
+            if(result != null){
+                speechResult.command = result?.groups[1]!!.value
+                speechResult.commandTy = commandBuilder.findOrder(speechResult.command)
+                speechResult.commandArgument = text.substring((result?.value)!!.length).trim()
             }
         }
 
-    /* --- Private Methods --- */
-    private fun getWords(text:String): List<String> = text.split(" ")
-
-    private fun isKeyWordCheck(firstWord:String, languageCode: Tools.LanguageCode): Boolean
-        = firstWord.toLowerCase() == Tools().getKeyWord(languageCode)
-
-    private fun getCommandArgument(commandWords:List<String>) : String{
-        var commandArgument = ""
-        commandArgument += commandWords.filterIndexed { index, _ -> index > 1 }
-        Log.d(TAG, commandArgument)
-        return commandArgument
+        return speechResult
     }
 
-//    fun processText2(text:String, languageCode: Tools.LanguageCode){
-//        var keyWord = Tools().getKeyWord(languageCode)
-//        var commandMap = CommandBuilder().createMapOrder(languageCode)
-//
-//    }
-//
-//    private fun getRegexString(keyWord: String, commandMap: HashMap<String, Tools.OrderTy>): String{
-//        var commandWord = commandMap.forEach { it -> it.key + "|"  }
-//    }
+    /* --- Private Methods --- */
+    private fun getRegexString(keyWord: String, commandMap: HashMap<String, Tools.CommandTy>): String{
+        var commandWord = ""
+        commandMap.forEach { it -> commandWord += it.key + "|"  }
+
+        var regexStr = "^" + keyWord + """\s(""" + commandWord.substring(0, commandWord.length - 1) + ")"
+
+        return regexStr
+    }
 }

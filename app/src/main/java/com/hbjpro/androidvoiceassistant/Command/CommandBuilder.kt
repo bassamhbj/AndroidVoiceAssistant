@@ -5,7 +5,7 @@ import com.hbjpro.androidvoiceassistant.Tools.Tools
 // More than one word for one order, next version
 
 open class CommandBuilder {
-    protected var _mapOrder:HashMap<String, Tools.OrderTy>
+    var _mapOrder:HashMap<String, Tools.CommandTy>
 
     init {
         _mapOrder = HashMap()
@@ -21,29 +21,29 @@ open class CommandBuilder {
     }
 
     /* --- Protected Methods --- */
-    protected fun findOrder(order:String):Tools.OrderTy{
-        return _mapOrder.getOrElse(order, {Tools.OrderTy.INVALID} )
+    fun findOrder(order:String):Tools.CommandTy{
+        return _mapOrder.getOrElse(order, {Tools.CommandTy.INVALID} )
     }
 
     /* --- Private Methods --- */
-    private fun createMapEnglish():HashMap<String, Tools.OrderTy>{
-        var map = HashMap<String, Tools.OrderTy>()
-        map.put("open", Tools.OrderTy.OPEN_APP)
-        map.put("search", Tools.OrderTy.SEARCH_INTERNET)
+    private fun createMapEnglish():HashMap<String, Tools.CommandTy>{
+        var map = HashMap<String, Tools.CommandTy>()
+        map.put("open", Tools.CommandTy.OPEN_APP)
+        map.put("search", Tools.CommandTy.SEARCH_INTERNET)
 
         return map
     }
 
-    private fun createMapSpanish():HashMap<String, Tools.OrderTy>{
-        var map = HashMap<String, Tools.OrderTy>()
-        map.put("abrir", Tools.OrderTy.OPEN_APP)
-        map.put("busca", Tools.OrderTy.SEARCH_INTERNET)
+    private fun createMapSpanish():HashMap<String, Tools.CommandTy>{
+        var map = HashMap<String, Tools.CommandTy>()
+        map.put("abrir", Tools.CommandTy.OPEN_APP)
+        map.put("busca", Tools.CommandTy.SEARCH_INTERNET)
 
         return map
     }
 
-    private fun createMapJapanese():HashMap<String, Tools.OrderTy>{
-        var map = HashMap<String, Tools.OrderTy>()
+    private fun createMapJapanese():HashMap<String, Tools.CommandTy>{
+        var map = HashMap<String, Tools.CommandTy>()
 
         return map
     }

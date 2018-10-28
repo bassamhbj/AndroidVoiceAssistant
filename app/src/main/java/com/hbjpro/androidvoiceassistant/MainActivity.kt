@@ -1,10 +1,11 @@
 package com.hbjpro.androidvoiceassistant
 
 import android.Manifest
-import android.content.Intent
 import android.support.v4.app.ActivityCompat
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
@@ -28,6 +29,21 @@ class MainActivity : AppCompatActivity(), MainViewPresent.MainViewListener  {
         })
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?) = when (item?.itemId){
+        R.id.action_settings ->{
+            setText("Settings press")
+            true
+        }
+        else -> {
+            super.onOptionsItemSelected(item)
+        }
+    }
+
     /* --- Private Methods --- */
     fun initElem(){
         requestPermission()
@@ -43,12 +59,15 @@ class MainActivity : AppCompatActivity(), MainViewPresent.MainViewListener  {
 
     /* --- Override Methods --- */
     override fun onSpeechResultSuccess(speechText: String) {
-        val _textView:TextView = findViewById(R.id.textView1)
-        _textView.text = speechText
+        setText(speechText)
     }
 
     override fun onSpeechResultError(errorMsg: String) {
-        val _textView:TextView = findViewById(R.id.textView1)
-        _textView.text = errorMsg
+        setText(errorMsg)
+    }
+
+    private fun setText(text: String){
+        val textView:TextView = findViewById(R.id.textView1)
+        textView.text = text
     }
 }

@@ -23,7 +23,7 @@ class ModuleApp {
 
     /* --- Private Methods --- */
     private fun getPackageName(appName: String): String{
-        var app:ApplicationInfo? = _listApp.find { _packageManager.getApplicationLabel(it).toString().toLowerCase().equals(appName) }
+        var app:ApplicationInfo? = _listApp.find { _packageManager.getApplicationLabel(it).toString().toLowerCase().equals(appName.toLowerCase()) }
 
         return if(app != null) app.packageName else ""
     }

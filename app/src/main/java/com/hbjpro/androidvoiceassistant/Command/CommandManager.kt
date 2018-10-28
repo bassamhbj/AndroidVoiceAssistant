@@ -18,8 +18,10 @@ class CommandManager() {
             Tools.CommandTy.OPEN_APP -> {
                 var moduleApp = ModuleApp()
                 var intent = moduleApp.getAppLaunchIntent(commandArgument)
-                SubApplication.instance.startActivity(intent)
-                // callback?
+                if(intent != null){
+                    SubApplication.instance.startActivity(intent)
+                }
+                // callback? error msg
             }
             Tools.CommandTy.SEARCH_INTERNET -> {
                 var moduleInternet = ModuleInternet()

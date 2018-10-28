@@ -13,6 +13,10 @@ voice -> key word that indicates a voice command begins
 open -> command word for open apps
 
 # Changelog
+V 1.0
+  - Update architecture to MVP Pattern
+  - Rewrite speech process logic with Regex
+
 V 0.5
   - Speech Recognition
   - Launch apps

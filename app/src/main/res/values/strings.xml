@@ -6,8 +6,8 @@
     </string-array>
 
     <string-array name="Language_value">
-        <item>1</item>
-        <item>2</item>
+        <item>en-US</item>
+        <item>es-ES</item>
     </string-array>
 
     <!-- TODO: Remove or change this placeholder text -->

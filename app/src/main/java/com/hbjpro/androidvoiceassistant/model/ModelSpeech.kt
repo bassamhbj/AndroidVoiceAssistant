@@ -8,7 +8,7 @@ import com.hbjpro.androidvoiceassistant.Tools.Tools
 class ModelSpeech {
 
     fun startSpeech(callback: ModelSpeechCallback, languageCode: Tools.LanguageCode){
-        ModuleSpeech(SubApplication.Companion.instance).apply {
+        ModuleSpeech().apply {
             setSpeechRecognizer(languageCode)
             startSpeechRecognizer(object: ModuleSpeech.SpeechCallback{
                 override fun onSpeechSuccess(speechResult: SpeechResult) {

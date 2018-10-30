@@ -2,7 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <android.support.v7.preference.ListPreference
-        android:defaultValue="1"
+        android:defaultValue="en-US"
         android:entries="@array/Language"
         android:entryValues="@array/Language_value"
         android:key="list_languages"

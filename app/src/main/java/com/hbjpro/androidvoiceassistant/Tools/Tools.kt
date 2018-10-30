@@ -1,22 +1,15 @@
 package com.hbjpro.androidvoiceassistant.Tools
 
 class Tools {
-    enum class LanguageCode{
-        ENGLISH_AMERICA,
-        SPANISH,
-        JAPANESE
+    enum class LanguageCode(val value: String){
+        ENGLISH_AMERICA("en-US"),
+        SPANISH("es-ES"),
+        JAPANESE("a-JP")
     }
 
     enum class CommandTy{
         OPEN_APP,
         SEARCH_INTERNET,
         INVALID
-    }
-
-    /* --- Static Methods --- */
-    fun getLocationStr(code: LanguageCode) = when(code){
-        LanguageCode.ENGLISH_AMERICA -> "en-US"
-        LanguageCode.SPANISH -> "es-ES"
-        LanguageCode.JAPANESE -> "ja-JP"
     }
 }

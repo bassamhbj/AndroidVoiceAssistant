@@ -26,9 +26,9 @@ class ProcessSpeech {
             var result: kotlin.text.MatchResult? = regex.find(text)
 
             if(result != null){
-                speechResult.command = result?.groups[1]!!.value
+                speechResult.command = result?.groups[1]!!.value.toLowerCase()
                 speechResult.commandTy = commandBuilder.findOrder(speechResult.command)
-                speechResult.commandArgument = text.substring((result?.value)!!.length).trim()
+                speechResult.commandArgument = text.substring((result?.value)!!.length).trim().toLowerCase()
             }
         }
 

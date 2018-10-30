@@ -27,15 +27,12 @@ class MainActivity : AppCompatActivity(), MainViewPresent.MainViewListener  {
 
         val button1:Button = findViewById(R.id.button1)
 
-        button1.setOnClickListener(View.OnClickListener {
-            _presenter.doSpeechRecognition(Tools.LanguageCode.ENGLISH_AMERICA)
-        })
+        var languageCode = getLanguageCodeFromSettings()
+        setText(languageCode.value)
+
+        button1.setOnClickListener { _presenter.doSpeechRecognition(languageCode) }
 
         //PreferenceManager.setDefaultValues(this, R.xml.preferences, false)
-
-        var sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        var languageOption = sharedPreferences.getString("list_languages", "-1")
-        setText(languageOption)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -45,7 +42,6 @@ class MainActivity : AppCompatActivity(), MainViewPresent.MainViewListener  {
 
     override fun onOptionsItemSelected(item: MenuItem?) = when (item?.itemId){
         R.id.action_settings ->{
-            setText("Settings press")
             var intent = Intent(this, SettingsActivity::class.java)
             startActivity(intent)
             true
@@ -56,16 +52,27 @@ class MainActivity : AppCompatActivity(), MainViewPresent.MainViewListener  {
     }
 
     /* --- Private Methods --- */
-    fun initElem(){
+    private fun initElem(){
         requestPermission()
     }
 
-    fun requestPermission(){
+    private fun requestPermission(){
         if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.RECORD_AUDIO)){
             Toast.makeText(applicationContext, "Please allow permission", Toast.LENGTH_SHORT).show()
         }else{
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.RECORD_AUDIO), 1)
         }
+    }
+
+    private fun getLanguageCodeFromSettings(): Tools.LanguageCode{
+        var sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        var languageCode = Tools.LanguageCode.ENGLISH_AMERICA
+        when(sharedPreferences.getString("list_languages", "-1")){
+            "en-US" -> languageCode = Tools.LanguageCode.ENGLISH_AMERICA
+            "es-ES" -> languageCode = Tools.LanguageCode.SPANISH
+            else -> languageCode = Tools.LanguageCode.ENGLISH_AMERICA
+        }
+        return languageCode
     }
 
     /* --- Override Methods --- */

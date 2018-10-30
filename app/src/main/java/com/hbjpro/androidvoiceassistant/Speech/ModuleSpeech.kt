@@ -1,32 +1,31 @@
 package com.hbjpro.androidvoiceassistant.Speech
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
 import android.util.Log
+import com.hbjpro.androidvoiceassistant.SubApplication
 import com.hbjpro.androidvoiceassistant.Tools.Tools
 
-class ModuleSpeech(val context: Context) {
+class ModuleSpeech {
 
     companion object {
         val TAG = ModuleSpeech::class.simpleName
     }
 
     private lateinit var _languageCode: Tools.LanguageCode
-    private var _speechRecognizer:SpeechRecognizer = SpeechRecognizer.createSpeechRecognizer(context)
+    private var _speechRecognizer:SpeechRecognizer = SpeechRecognizer.createSpeechRecognizer(SubApplication.instance)
 
     /* --- Public Methods --- */
     fun setSpeechRecognizer(languageCode: Tools.LanguageCode){
         _languageCode = languageCode
-        val locationCode = Tools().getLocationStr(_languageCode)
 
         val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
         with(intent){
             putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
-            putExtra(RecognizerIntent.EXTRA_LANGUAGE, locationCode)
+            putExtra(RecognizerIntent.EXTRA_LANGUAGE, _languageCode.value)
         }
 
         _speechRecognizer.startListening(intent)

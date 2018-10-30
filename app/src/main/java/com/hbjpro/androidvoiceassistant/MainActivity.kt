@@ -59,18 +59,24 @@ class MainActivity : AppCompatActivity(), MainViewPresent.MainViewListener  {
     private fun requestPermission(){
         if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.RECORD_AUDIO)){
             Toast.makeText(applicationContext, "Please allow permission", Toast.LENGTH_SHORT).show()
-        }else{
+        }//else{
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.RECORD_AUDIO), 1)
-        }
+        //}
     }
 
     private fun getLanguageCodeFromSettings(): Tools.LanguageCode{
         var sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         var languageCode = Tools.LanguageCode.ENGLISH_AMERICA
         when(sharedPreferences.getString("list_languages", "-1")){
-            "en-US" -> languageCode = Tools.LanguageCode.ENGLISH_AMERICA
-            "es-ES" -> languageCode = Tools.LanguageCode.SPANISH
-            else -> languageCode = Tools.LanguageCode.ENGLISH_AMERICA
+            Tools.LanguageCode.ENGLISH_AMERICA.value -> {
+                languageCode = Tools.LanguageCode.ENGLISH_AMERICA
+            }
+            Tools.LanguageCode.SPANISH.value -> {
+                languageCode = Tools.LanguageCode.SPANISH
+            }
+            else -> {
+                languageCode = Tools.LanguageCode.ENGLISH_AMERICA
+            }
         }
         return languageCode
     }

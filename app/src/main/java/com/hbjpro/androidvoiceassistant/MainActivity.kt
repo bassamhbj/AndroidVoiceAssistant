@@ -11,6 +11,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Button
+import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
 import com.hbjpro.androidvoiceassistant.Tools.Tools
@@ -31,6 +32,8 @@ class MainActivity : AppCompatActivity(), MainViewPresent.MainViewListener  {
         setText(languageCode.value)
 
         button1.setOnClickListener { _presenter.doSpeechRecognition(languageCode) }
+
+        testAdapter()
 
         //PreferenceManager.setDefaultValues(this, R.xml.preferences, false)
     }
@@ -93,5 +96,19 @@ class MainActivity : AppCompatActivity(), MainViewPresent.MainViewListener  {
     private fun setText(text: String){
         val textView:TextView = findViewById(R.id.textView1)
         textView.text = text
+    }
+
+    private fun testAdapter(){
+        var list: MutableList<String> = mutableListOf()
+
+        for(i in 1..10){
+            list.add("Item numero $i")
+        }
+
+        var adapter = ListViewAdapter(list)
+
+        var listView: ListView = findViewById(R.id.listViewNews)
+
+        listView.adapter = adapter
     }
 }

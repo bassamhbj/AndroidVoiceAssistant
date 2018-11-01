@@ -9,7 +9,12 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
 
-class ListViewAdapter (var list: MutableList<String>) : BaseAdapter() {
+
+import android.support.v7.widget.RecyclerView
+import com.hbjpro.androidvoiceassistant.Data.Post
+import kotlinx.android.synthetic.main.list_view_item.view.*
+
+/*class ListViewAdapter (var list: MutableList<String>) : BaseAdapter() {
 
     var inflater : LayoutInflater? = null
 
@@ -50,8 +55,30 @@ private class ViewHolder(var view: View?){
 
     fun setText(text: String?){
         //var numberText = root?.findViewById(R.id.txt_number) as TextView
-        var infoText = root?.findViewById(R.id.info_text) as TextView
+        //var infoText = root?.findViewById(R.id.info_text) as TextView
 
-        infoText.text = text
+        //infoText.text = text
     }
+}*/
+
+class PostItemAdapter(val postList: List<Post>, val context: Context) :
+        RecyclerView.Adapter<PostItemAdapter.ViewHolder>() {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+
+        return ViewHolder(LayoutInflater.from(context).inflate(R.layout.list_view_item,
+                parent, false))
+    }
+
+    override fun getItemCount(): Int {
+        return 10
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
+        holder.itemView.textViewTitle.text = postList.get(position).title
+        holder.itemView.textViewBody.text = postList.get(position).body
+
+    }
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
 }

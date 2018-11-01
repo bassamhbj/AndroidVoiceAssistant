@@ -7,6 +7,7 @@ import android.support.v4.app.ActivityCompat
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -14,8 +15,20 @@ import android.widget.Button
 import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
+import com.google.gson.GsonBuilder
+import com.hbjpro.androidvoiceassistant.Interface.INewsApi
+import com.hbjpro.androidvoiceassistant.Tools.NewsDataAdapter
 import com.hbjpro.androidvoiceassistant.Tools.Tools
 import com.hbjpro.androidvoiceassistant.presenter.MainViewPresent
+import io.reactivex.Scheduler
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.internal.schedulers.IoScheduler
+import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.activity_main.*
+import retrofit2.Callback
+import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity(), MainViewPresent.MainViewListener  {
 
@@ -31,9 +44,11 @@ class MainActivity : AppCompatActivity(), MainViewPresent.MainViewListener  {
         var languageCode = getLanguageCodeFromSettings()
         setText(languageCode.value)
 
-        button1.setOnClickListener { _presenter.doSpeechRecognition(languageCode) }
+        //button1.setOnClickListener { _presenter.doSpeechRecognition(languageCode) }
 
-        testAdapter()
+        //testAdapter()
+
+        testJSON()
 
         //PreferenceManager.setDefaultValues(this, R.xml.preferences, false)
     }
@@ -98,17 +113,25 @@ class MainActivity : AppCompatActivity(), MainViewPresent.MainViewListener  {
         textView.text = text
     }
 
-    private fun testAdapter(){
-        var list: MutableList<String> = mutableListOf()
+    private fun testJSON(){
+        recyclerViewNews.layoutManager = LinearLayoutManager(this)
 
-        for(i in 1..10){
-            list.add("Item numero $i")
+        val retrofit = Retrofit.Builder().addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .baseUrl("https://jsonplaceholder.typicode.com/").build()
+
+        //.baseUrl("https://newsapi.org/").build()
+
+        val newsApi = retrofit.create(INewsApi::class.java)
+
+        //var response = newsApi.getTopHeadlines("jp", "b13d74d28e0a4c30b9945524dfec7faf")
+        var response = newsApi.getAllPosts()
+
+
+        response.observeOn(AndroidSchedulers.mainThread()).subscribeOn(IoScheduler()).subscribe {
+            var a = it
+           // recyclerViewNews.adapter = PostItemAdapter(it, this)
         }
 
-        var adapter = ListViewAdapter(list)
-
-        var listView: ListView = findViewById(R.id.listViewNews)
-
-        listView.adapter = adapter
     }
 }

@@ -10,9 +10,7 @@ import android.preference.PreferenceManager
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.Button
-import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
 import com.google.gson.GsonBuilder
@@ -20,12 +18,9 @@ import com.hbjpro.androidvoiceassistant.Interface.INewsApi
 import com.hbjpro.androidvoiceassistant.Tools.NewsDataAdapter
 import com.hbjpro.androidvoiceassistant.Tools.Tools
 import com.hbjpro.androidvoiceassistant.presenter.MainViewPresent
-import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.internal.schedulers.IoScheduler
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
-import retrofit2.Callback
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -44,9 +39,7 @@ class MainActivity : AppCompatActivity(), MainViewPresent.MainViewListener  {
         var languageCode = getLanguageCodeFromSettings()
         setText(languageCode.value)
 
-        //button1.setOnClickListener { _presenter.doSpeechRecognition(languageCode) }
-
-        //testAdapter()
+        button1.setOnClickListener { _presenter.doSpeechRecognition(languageCode) }
 
         testJSON()
 
@@ -118,19 +111,15 @@ class MainActivity : AppCompatActivity(), MainViewPresent.MainViewListener  {
 
         val retrofit = Retrofit.Builder().addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .baseUrl("https://jsonplaceholder.typicode.com/").build()
-
-        //.baseUrl("https://newsapi.org/").build()
+                .baseUrl("https://newsapi.org/").build()
 
         val newsApi = retrofit.create(INewsApi::class.java)
 
-        //var response = newsApi.getTopHeadlines("jp", "b13d74d28e0a4c30b9945524dfec7faf")
-        var response = newsApi.getAllPosts()
+        var response = newsApi.getTopHeadlines("jp", "b13d74d28e0a4c30b9945524dfec7faf")
 
 
-        response.observeOn(AndroidSchedulers.mainThread()).subscribeOn(IoScheduler()).subscribe {
-            var a = it
-           // recyclerViewNews.adapter = PostItemAdapter(it, this)
+        response.observeOn(AndroidSchedulers.mainThread()).subscribeOn(IoScheduler()).subscribe{
+            recyclerViewNews.adapter = NewsDataAdapter(it.articles, this)
         }
 
     }

@@ -26,7 +26,11 @@ class CommandManager() {
             Tools.CommandTy.SEARCH_INTERNET -> {
                 var moduleInternet = ModuleInternet()
             }
+            Tools.CommandTy.NEWS_FEED -> {
+
+            }
             Tools.CommandTy.INVALID -> return
         }
     }
+
 }

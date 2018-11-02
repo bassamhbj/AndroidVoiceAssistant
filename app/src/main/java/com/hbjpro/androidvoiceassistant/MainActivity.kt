@@ -10,12 +10,9 @@ import android.preference.PreferenceManager
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
 import com.google.gson.GsonBuilder
 import com.hbjpro.androidvoiceassistant.Interface.INewsApi
-import com.hbjpro.androidvoiceassistant.Tools.NewsDataAdapter
 import com.hbjpro.androidvoiceassistant.Tools.Tools
 import com.hbjpro.androidvoiceassistant.presenter.MainViewPresent
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -33,8 +30,6 @@ class MainActivity : AppCompatActivity(), MainViewPresent.MainViewListener  {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initElem()
-
-        val button1:Button = findViewById(R.id.button1)
 
         var languageCode = getLanguageCodeFromSettings()
         setText(languageCode.value)
@@ -68,11 +63,13 @@ class MainActivity : AppCompatActivity(), MainViewPresent.MainViewListener  {
     }
 
     private fun requestPermission(){
-        if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.RECORD_AUDIO)){
+        if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.RECORD_AUDIO)
+            || ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.INTERNET)){
             Toast.makeText(applicationContext, "Please allow permission", Toast.LENGTH_SHORT).show()
-        }//else{
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.RECORD_AUDIO), 1)
-        //}
+        }
+
+        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.RECORD_AUDIO), 1)
+        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.INTERNET), 1)
     }
 
     private fun getLanguageCodeFromSettings(): Tools.LanguageCode{
@@ -102,8 +99,7 @@ class MainActivity : AppCompatActivity(), MainViewPresent.MainViewListener  {
     }
 
     private fun setText(text: String){
-        val textView:TextView = findViewById(R.id.textView1)
-        textView.text = text
+        textView1.text = text
     }
 
     private fun testJSON(){
@@ -111,12 +107,11 @@ class MainActivity : AppCompatActivity(), MainViewPresent.MainViewListener  {
 
         val retrofit = Retrofit.Builder().addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .baseUrl("https://newsapi.org/").build()
+                .baseUrl(Tools.NEWS_API_BASE_URL).build()
 
         val newsApi = retrofit.create(INewsApi::class.java)
 
-        var response = newsApi.getTopHeadlines("jp", "b13d74d28e0a4c30b9945524dfec7faf")
-
+        var response = newsApi.getTopHeadlines("jp", "")
 
         response.observeOn(AndroidSchedulers.mainThread()).subscribeOn(IoScheduler()).subscribe{
             recyclerViewNews.adapter = NewsDataAdapter(it.articles, this)

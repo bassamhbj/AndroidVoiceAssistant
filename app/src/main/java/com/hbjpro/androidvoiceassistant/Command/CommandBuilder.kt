@@ -34,16 +34,18 @@ open class CommandBuilder {
     /* --- Private Methods --- */
     private fun createMapEnglish():HashMap<String, Tools.CommandTy>{
         var map = HashMap<String, Tools.CommandTy>()
-        map.put("open", Tools.CommandTy.OPEN_APP)
-        map.put("search", Tools.CommandTy.SEARCH_INTERNET)
+        map["open"] = Tools.CommandTy.OPEN_APP
+        map["search"] = Tools.CommandTy.SEARCH_INTERNET
+        map["get news feed"] = Tools.CommandTy.NEWS_FEED
 
         return map
     }
 
     private fun createMapSpanish():HashMap<String, Tools.CommandTy>{
         var map = HashMap<String, Tools.CommandTy>()
-        map.put("abrir", Tools.CommandTy.OPEN_APP)
-        map.put("busca", Tools.CommandTy.SEARCH_INTERNET)
+        map["abrir"] = Tools.CommandTy.OPEN_APP
+        map["busca"] = Tools.CommandTy.SEARCH_INTERNET
+        map["noticias"] = Tools.CommandTy.NEWS_FEED
 
         return map
     }

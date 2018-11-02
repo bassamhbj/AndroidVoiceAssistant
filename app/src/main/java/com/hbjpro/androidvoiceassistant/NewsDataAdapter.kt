@@ -1,4 +1,4 @@
-package com.hbjpro.androidvoiceassistant.Tools
+package com.hbjpro.androidvoiceassistant
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.hbjpro.androidvoiceassistant.Data.Article
-import com.hbjpro.androidvoiceassistant.R
 import kotlinx.android.synthetic.main.list_view_item.view.*
 
 class NewsDataAdapter(val articlesList: List<Article>, val context: Context) : RecyclerView.Adapter<NewsDataAdapter.ViewHolder>(){

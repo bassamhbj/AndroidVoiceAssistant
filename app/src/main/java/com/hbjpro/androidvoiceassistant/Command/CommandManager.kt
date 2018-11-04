@@ -16,11 +16,7 @@ class CommandManager() {
     private fun doExecuteCommand(commandTy: Tools.CommandTy, commandArgument: String){
         when(commandTy){
             Tools.CommandTy.OPEN_APP -> {
-                var moduleApp = ModuleApp()
-                var intent = moduleApp.getAppLaunchIntent(commandArgument)
-                if(intent != null){
-                    SubApplication.instance.startActivity(intent)
-                }
+
                 // callback? error msg
             }
             Tools.CommandTy.SEARCH_INTERNET -> {

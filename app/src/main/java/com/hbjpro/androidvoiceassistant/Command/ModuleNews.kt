@@ -1,30 +1,32 @@
 package com.hbjpro.androidvoiceassistant.Command
 
-import com.google.gson.GsonBuilder
 import com.hbjpro.androidvoiceassistant.Data.NewsData
 import com.hbjpro.androidvoiceassistant.Interface.INewsApi
-import com.hbjpro.androidvoiceassistant.Tools.Tools
-import io.reactivex.Observable
-import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.gson.GsonConverterFactory
+import com.hbjpro.androidvoiceassistant.common.rest.ApiClient
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class ModuleNews {
 
     fun getNewsFeed(callback: NewsModuleCallback){
-        val retrofit = Retrofit.Builder().addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .baseUrl(Tools.NEWS_API_BASE_URL).build()
+        ApiClient.createService(INewsApi::class.java).getTopHeadlines("jp", "").enqueue(object: Callback<NewsData>{
+            override fun onFailure(call: Call<NewsData>, t: Throwable) {
+                callback.onError()
+            }
 
-        val newsApi = retrofit.create(INewsApi::class.java)
-
-        var response = newsApi.getTopHeadlines("jp", "")
-
-        callback.onSuccess(response)
+            override fun onResponse(call: Call<NewsData>, response: Response<NewsData>) {
+                if(response?.body() != null && response.code() == 200){
+                    callback.onSuccess(response.body()!!)
+                }else{
+                    callback.onError()
+                }
+            }
+        })
     }
 
-    interface NewsModuleCallback(){
-        fun onSuccess(observable: Observable<NewsData>)
+    interface NewsModuleCallback{
+        fun onSuccess(newsData: NewsData)
         fun onError()
     }
 }

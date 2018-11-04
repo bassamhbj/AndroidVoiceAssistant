@@ -91,11 +91,15 @@ class MainActivity : AppCompatActivity(), MainViewPresent.MainViewListener  {
 
     /* --- Override Methods --- */
     override fun onSpeechResultSuccess(speechText: String) {
-        setText(speechText)
+        runOnUiThread {
+            setText(speechText)
+        }
     }
 
     override fun onSpeechResultError(errorMsg: String) {
-        setText(errorMsg)
+        runOnUiThread {
+            setText(errorMsg)
+        }
     }
 
     private fun setText(text: String){

@@ -12,14 +12,14 @@ class ModuleNews {
     fun getNewsFeed(callback: NewsModuleCallback){
         ApiClient.createService(INewsApi::class.java).getTopHeadlines("jp", "").enqueue(object: Callback<NewsData>{
             override fun onFailure(call: Call<NewsData>, t: Throwable) {
-                callback.onError()
+                callback.onError("")
             }
 
             override fun onResponse(call: Call<NewsData>, response: Response<NewsData>) {
                 if(response?.body() != null && response.code() == 200){
                     callback.onSuccess(response.body()!!)
                 }else{
-                    callback.onError()
+                    callback.onError("")
                 }
             }
         })
@@ -27,6 +27,6 @@ class ModuleNews {
 
     interface NewsModuleCallback{
         fun onSuccess(newsData: NewsData)
-        fun onError()
+        fun onError(errorMsg: String)
     }
 }

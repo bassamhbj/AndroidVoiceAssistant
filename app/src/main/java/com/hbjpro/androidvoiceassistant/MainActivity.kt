@@ -11,16 +11,10 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import com.google.gson.GsonBuilder
-import com.hbjpro.androidvoiceassistant.Interface.INewsApi
+import com.hbjpro.androidvoiceassistant.Data.NewsData
 import com.hbjpro.androidvoiceassistant.Tools.Tools
 import com.hbjpro.androidvoiceassistant.presenter.MainViewPresent
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.internal.schedulers.IoScheduler
 import kotlinx.android.synthetic.main.activity_main.*
-import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity(), MainViewPresent.MainViewListener  {
 
@@ -35,8 +29,6 @@ class MainActivity : AppCompatActivity(), MainViewPresent.MainViewListener  {
         setText(languageCode.value)
 
         button1.setOnClickListener { _presenter.doSpeechRecognition(languageCode) }
-
-        testJSON()
 
         //PreferenceManager.setDefaultValues(this, R.xml.preferences, false)
     }
@@ -74,19 +66,18 @@ class MainActivity : AppCompatActivity(), MainViewPresent.MainViewListener  {
 
     private fun getLanguageCodeFromSettings(): Tools.LanguageCode{
         var sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        var languageCode = Tools.LanguageCode.ENGLISH_AMERICA
         when(sharedPreferences.getString("list_languages", "-1")){
             Tools.LanguageCode.ENGLISH_AMERICA.value -> {
-                languageCode = Tools.LanguageCode.ENGLISH_AMERICA
+                return Tools.LanguageCode.ENGLISH_AMERICA
             }
             Tools.LanguageCode.SPANISH.value -> {
-                languageCode = Tools.LanguageCode.SPANISH
+                return  Tools.LanguageCode.SPANISH
             }
             else -> {
-                languageCode = Tools.LanguageCode.ENGLISH_AMERICA
+                return  Tools.LanguageCode.ENGLISH_AMERICA
             }
         }
-        return languageCode
+
     }
 
     /* --- Override Methods --- */
@@ -96,7 +87,20 @@ class MainActivity : AppCompatActivity(), MainViewPresent.MainViewListener  {
         }
     }
 
-    override fun onSpeechResultError(errorMsg: String) {
+    override fun onOpenAppSuccess(intent: Intent) {
+        runOnUiThread {
+            startActivity(intent)
+        }
+    }
+
+    override fun onGetNewsFeedSuccess(newsData: NewsData) {
+        runOnUiThread {
+            recyclerViewNews.layoutManager = LinearLayoutManager(this)
+            recyclerViewNews.adapter = NewsDataAdapter(newsData.articles, this)
+        }
+    }
+
+    override fun onError(errorMsg: String) {
         runOnUiThread {
             setText(errorMsg)
         }
@@ -104,22 +108,5 @@ class MainActivity : AppCompatActivity(), MainViewPresent.MainViewListener  {
 
     private fun setText(text: String){
         textView1.text = text
-    }
-
-    private fun testJSON(){
-        recyclerViewNews.layoutManager = LinearLayoutManager(this)
-
-        val retrofit = Retrofit.Builder().addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .baseUrl(Tools.NEWS_API_BASE_URL).build()
-
-        val newsApi = retrofit.create(INewsApi::class.java)
-
-        var response = newsApi.getTopHeadlines("jp", "")
-
-        response.observeOn(AndroidSchedulers.mainThread()).subscribeOn(IoScheduler()).subscribe{
-            recyclerViewNews.adapter = NewsDataAdapter(it.articles, this)
-        }
-
     }
 }

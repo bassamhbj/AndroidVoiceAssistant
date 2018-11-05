@@ -1,25 +1,19 @@
 package com.hbjpro.androidvoiceassistant.model
 
 import android.content.Intent
-import com.hbjpro.androidvoiceassistant.Command.CommandManager
 import com.hbjpro.androidvoiceassistant.Command.ModuleApp
 import com.hbjpro.androidvoiceassistant.Command.ModuleNews
 import com.hbjpro.androidvoiceassistant.Data.NewsData
-import com.hbjpro.androidvoiceassistant.Speech.SpeechResult
 
 class ModelCommand {
-
-    fun executeCommand(speechResult: SpeechResult){
-        var commandManager = CommandManager()
-        commandManager.executeCommand(speechResult)
-    }
 
     fun executeOpenApp(callbackOpenApp: CallbackOpenApp ,appName: String){
         var moduleApp = ModuleApp()
         var intent = moduleApp.getAppLaunchIntent(appName)
         if(intent != null){
-            // SubApplication.instance.startActivity(intent)
-            // callback
+            callbackOpenApp.onSuccess(intent)
+        }else{
+            callbackOpenApp.onError("")
         }
     }
 
@@ -27,23 +21,23 @@ class ModelCommand {
         ModuleNews().apply {
             getNewsFeed(object: ModuleNews.NewsModuleCallback{
                 override fun onSuccess(newsData: NewsData) {
-                    callback.onSucess(newsData)
+                    callback.onSuccess(newsData)
                 }
 
-                override fun onError() {
-                    callback.onError()
+                override fun onError(errorMsg: String) {
+                    callback.onError("")
                 }
             })
         }
     }
 
     interface CallbackOpenApp{
-        fun onSucess(intent: Intent)
-        fun onError()
+        fun onSuccess(intent: Intent)
+        fun onError(errorMsg: String)
     }
 
     interface CallbackNewsFeed{
-        fun onSucess(newsData: NewsData)
-        fun onError()
+        fun onSuccess(newsData: NewsData)
+        fun onError(errorMsg: String)
     }
 }

@@ -1,4 +1,4 @@
-package com.hbjpro.androidvoiceassistant.Tools
+package com.hbjpro.androidvoiceassistant.tools
 
 class Tools {
 

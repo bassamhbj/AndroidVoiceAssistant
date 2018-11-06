@@ -11,8 +11,8 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import com.hbjpro.androidvoiceassistant.Data.NewsData
-import com.hbjpro.androidvoiceassistant.Tools.Tools
+import com.hbjpro.androidvoiceassistant.data.NewsData
+import com.hbjpro.androidvoiceassistant.tools.Tools
 import com.hbjpro.androidvoiceassistant.presenter.MainViewPresent
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -28,7 +28,10 @@ class MainActivity : AppCompatActivity(), MainViewPresent.MainViewListener  {
         var languageCode = getLanguageCodeFromSettings()
         setText(languageCode.value)
 
-        button1.setOnClickListener { _presenter.doSpeechRecognition(languageCode) }
+        button1.setOnClickListener {
+            //_presenter.doSpeechRecognition(languageCode)
+            _presenter.doExecuteGetNewsFeed()
+        }
 
         //PreferenceManager.setDefaultValues(this, R.xml.preferences, false)
     }

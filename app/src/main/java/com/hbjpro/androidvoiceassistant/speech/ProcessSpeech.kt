@@ -1,8 +1,7 @@
-package com.hbjpro.androidvoiceassistant.Speech
+package com.hbjpro.androidvoiceassistant.speech
 
-import android.util.Log
-import com.hbjpro.androidvoiceassistant.Command.CommandBuilder
-import com.hbjpro.androidvoiceassistant.Tools.Tools
+import com.hbjpro.androidvoiceassistant.command.CommandBuilder
+import com.hbjpro.androidvoiceassistant.tools.Tools
 
 class ProcessSpeech {
 

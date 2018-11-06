@@ -1,4 +1,4 @@
-package com.hbjpro.androidvoiceassistant.Command;
+package com.hbjpro.androidvoiceassistant.command;
 
 public class ModuleInternet {
     public ModuleInternet(){

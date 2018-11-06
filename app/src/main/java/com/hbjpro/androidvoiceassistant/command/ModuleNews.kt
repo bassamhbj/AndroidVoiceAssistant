@@ -1,6 +1,6 @@
-package com.hbjpro.androidvoiceassistant.Command
+package com.hbjpro.androidvoiceassistant.command
 
-import com.hbjpro.androidvoiceassistant.Data.NewsData
+import com.hbjpro.androidvoiceassistant.data.NewsData
 import com.hbjpro.androidvoiceassistant.Interface.INewsApi
 import com.hbjpro.androidvoiceassistant.common.rest.ApiClient
 import retrofit2.Call
@@ -10,7 +10,7 @@ import retrofit2.Response
 class ModuleNews {
 
     fun getNewsFeed(callback: NewsModuleCallback){
-        ApiClient.createService(INewsApi::class.java).getTopHeadlines("jp", "").enqueue(object: Callback<NewsData>{
+        ApiClient.createService(INewsApi::class.java).getTopHeadlines("jp", "b13d74d28e0a4c30b9945524dfec7faf").enqueue(object: Callback<NewsData>{
             override fun onFailure(call: Call<NewsData>, t: Throwable) {
                 callback.onError("")
             }

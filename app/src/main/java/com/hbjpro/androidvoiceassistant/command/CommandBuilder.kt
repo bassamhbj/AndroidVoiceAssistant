@@ -1,6 +1,6 @@
-package com.hbjpro.androidvoiceassistant.Command
+package com.hbjpro.androidvoiceassistant.command
 
-import com.hbjpro.androidvoiceassistant.Tools.Tools
+import com.hbjpro.androidvoiceassistant.tools.Tools
 
 // More than one word for one order, next version
 

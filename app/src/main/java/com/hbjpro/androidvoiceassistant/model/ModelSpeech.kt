@@ -1,8 +1,8 @@
 package com.hbjpro.androidvoiceassistant.model
 
-import com.hbjpro.androidvoiceassistant.Speech.ModuleSpeech
-import com.hbjpro.androidvoiceassistant.Speech.SpeechResult
-import com.hbjpro.androidvoiceassistant.Tools.Tools
+import com.hbjpro.androidvoiceassistant.speech.ModuleSpeech
+import com.hbjpro.androidvoiceassistant.speech.SpeechResult
+import com.hbjpro.androidvoiceassistant.tools.Tools
 
 class ModelSpeech {
 

@@ -1,7 +1,6 @@
 package com.hbjpro.androidvoiceassistant.Interface
 
-import com.hbjpro.androidvoiceassistant.Data.NewsData
-import io.reactivex.Observable
+import com.hbjpro.androidvoiceassistant.data.NewsData
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query

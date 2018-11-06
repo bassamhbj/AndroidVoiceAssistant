@@ -1,10 +1,10 @@
 package com.hbjpro.androidvoiceassistant.presenter
 
 import android.content.Intent
-import com.hbjpro.androidvoiceassistant.Data.NewsData
+import com.hbjpro.androidvoiceassistant.data.NewsData
 import com.hbjpro.androidvoiceassistant.model.ModelSpeech
-import com.hbjpro.androidvoiceassistant.Speech.SpeechResult
-import com.hbjpro.androidvoiceassistant.Tools.Tools
+import com.hbjpro.androidvoiceassistant.speech.SpeechResult
+import com.hbjpro.androidvoiceassistant.tools.Tools
 import com.hbjpro.androidvoiceassistant.model.ModelCommand
 
 class MainViewPresent(val view: MainViewListener){
@@ -50,7 +50,7 @@ class MainViewPresent(val view: MainViewListener){
     fun doExecuteGetNewsFeed(){
         _modelCommand.executeGetNewsFeed(object: ModelCommand.CallbackNewsFeed{
             override fun onSuccess(newsData: NewsData) {
-
+                view.onGetNewsFeedSuccess(newsData)
             }
 
             override fun onError(errorMsg: String) {

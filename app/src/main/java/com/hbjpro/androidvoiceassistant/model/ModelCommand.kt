@@ -1,9 +1,9 @@
 package com.hbjpro.androidvoiceassistant.model
 
 import android.content.Intent
-import com.hbjpro.androidvoiceassistant.Command.ModuleApp
-import com.hbjpro.androidvoiceassistant.Command.ModuleNews
-import com.hbjpro.androidvoiceassistant.Data.NewsData
+import com.hbjpro.androidvoiceassistant.command.ModuleApp
+import com.hbjpro.androidvoiceassistant.command.ModuleNews
+import com.hbjpro.androidvoiceassistant.data.NewsData
 
 class ModelCommand {
 

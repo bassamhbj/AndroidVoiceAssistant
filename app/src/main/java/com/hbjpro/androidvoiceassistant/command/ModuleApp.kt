@@ -1,4 +1,4 @@
-package com.hbjpro.androidvoiceassistant.Command
+package com.hbjpro.androidvoiceassistant.command
 
 import android.content.Intent
 import android.content.pm.ApplicationInfo

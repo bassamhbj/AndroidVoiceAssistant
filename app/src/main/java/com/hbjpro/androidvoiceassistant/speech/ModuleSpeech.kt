@@ -1,4 +1,4 @@
-package com.hbjpro.androidvoiceassistant.Speech
+package com.hbjpro.androidvoiceassistant.speech
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,7 +7,7 @@ import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
 import android.util.Log
 import com.hbjpro.androidvoiceassistant.SubApplication
-import com.hbjpro.androidvoiceassistant.Tools.Tools
+import com.hbjpro.androidvoiceassistant.tools.Tools
 
 class ModuleSpeech {
 

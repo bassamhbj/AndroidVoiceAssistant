@@ -7,6 +7,7 @@ import android.support.v4.app.ActivityCompat
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.support.design.widget.Snackbar
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
@@ -26,11 +27,10 @@ class MainActivity : AppCompatActivity(), MainViewPresent.MainViewListener  {
         initElem()
 
         var languageCode = getLanguageCodeFromSettings()
-        setText(languageCode.value)
+        setSnackBar("Current language: ${languageCode.value}")
 
         button1.setOnClickListener {
-            //_presenter.doSpeechRecognition(languageCode)
-            _presenter.doExecuteGetNewsFeed()
+            _presenter.doSpeechRecognition(languageCode)
         }
 
         //PreferenceManager.setDefaultValues(this, R.xml.preferences, false)
@@ -80,13 +80,16 @@ class MainActivity : AppCompatActivity(), MainViewPresent.MainViewListener  {
                 return  Tools.LanguageCode.ENGLISH_AMERICA
             }
         }
+    }
 
+    private fun setSnackBar(text: String){
+        Snackbar.make(main_layout, text, Snackbar.LENGTH_SHORT).show()
     }
 
     /* --- Override Methods --- */
     override fun onSpeechResultSuccess(speechText: String) {
         runOnUiThread {
-            setText(speechText)
+            setSnackBar(speechText)
         }
     }
 
@@ -105,11 +108,7 @@ class MainActivity : AppCompatActivity(), MainViewPresent.MainViewListener  {
 
     override fun onError(errorMsg: String) {
         runOnUiThread {
-            setText(errorMsg)
+            setSnackBar(errorMsg)
         }
-    }
-
-    private fun setText(text: String){
-        textView1.text = text
     }
 }

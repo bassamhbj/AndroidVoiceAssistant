@@ -8,11 +8,8 @@ object PackageManagerClient {
     private var packageManager: PackageManager
 
     init {
-        packageManager = SubApplication.instance.packageManager
+        packageManager = SubApplication.context.packageManager
     }
 
     fun getPackageManager(): PackageManager = packageManager
-
-    fun getInstalledApps(): List<ApplicationInfo>
-            = packageManager.getInstalledApplications(PackageManager.GET_META_DATA)
 }

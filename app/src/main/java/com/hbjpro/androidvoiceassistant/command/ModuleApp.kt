@@ -3,17 +3,9 @@ package com.hbjpro.androidvoiceassistant.command
 import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
-import com.hbjpro.androidvoiceassistant.SubApplication
 import com.hbjpro.androidvoiceassistant.common.app.PackageManagerClient
 
 class ModuleApp {
-    //private var _packageManager: PackageManager
-    //private var _listApp: List<ApplicationInfo>
-
-    //init {
-        //_packageManager = SubApplication.instance.packageManager
-        //_listApp = _packageManager.getInstalledApplications(PackageManager.GET_META_DATA)
-    //}
 
     /* --- Public Methods --- */
     fun getAppLaunchIntent(appName: String): Intent?{
@@ -24,7 +16,9 @@ class ModuleApp {
 
     /* --- Private Methods --- */
     private fun getPackageName(appName: String): String{
-        var app:ApplicationInfo? = PackageManagerClient.getInstalledApps().find { PackageManagerClient.getPackageManager().getApplicationLabel(it).toString().toLowerCase().equals(appName) }
+        var app:ApplicationInfo? = PackageManagerClient.getPackageManager()
+                .getInstalledApplications(PackageManager.GET_META_DATA)
+                .find { PackageManagerClient.getPackageManager().getApplicationLabel(it).toString().toLowerCase().equals(appName) }
 
         return if(app != null) app.packageName else ""
     }

@@ -5,15 +5,13 @@ import android.content.Context
 
 class SubApplication : Application() {
 
-    //object SubApplication
-
     companion object {
-        lateinit var instance: SubApplication
+        lateinit var context: Context
             private set
     }
 
     override fun onCreate() {
         super.onCreate()
-        instance = this
+        context = this
     }
 }

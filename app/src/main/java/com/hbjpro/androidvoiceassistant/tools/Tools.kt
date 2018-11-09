@@ -1,5 +1,8 @@
 package com.hbjpro.androidvoiceassistant.tools
 
+import android.support.v4.app.FragmentManager
+import android.support.v4.app.FragmentTransaction
+
 class Tools {
 
     companion object {
@@ -16,6 +19,7 @@ class Tools {
         OPEN_APP,
         SEARCH_INTERNET,
         NEWS_FEED,
+        NOTES,
         INVALID
     }
 }

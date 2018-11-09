@@ -8,11 +8,10 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.support.design.widget.Snackbar
-import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import com.hbjpro.androidvoiceassistant.data.NewsData
+import com.hbjpro.androidvoiceassistant.common.inTransaction
 import com.hbjpro.androidvoiceassistant.tools.Tools
 import com.hbjpro.androidvoiceassistant.presenter.MainViewPresent
 import kotlinx.android.synthetic.main.activity_main.*
@@ -29,11 +28,7 @@ class MainActivity : AppCompatActivity(), MainViewPresent.MainViewListener  {
         var languageCode = getLanguageCodeFromSettings()
         setSnackBar("Current language: ${languageCode.value}")
 
-        button1.setOnClickListener {
-            _presenter.doSpeechRecognition(languageCode)
-        }
-
-        //PreferenceManager.setDefaultValues(this, R.xml.preferences, false)
+        button1.setOnClickListener { _presenter.doSpeechRecognition(languageCode) }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -93,16 +88,9 @@ class MainActivity : AppCompatActivity(), MainViewPresent.MainViewListener  {
         }
     }
 
-    override fun onOpenAppSuccess(intent: Intent) {
-        runOnUiThread {
-            startActivity(intent)
-        }
-    }
-
-    override fun onGetNewsFeedSuccess(newsData: NewsData) {
-        runOnUiThread {
-            recyclerViewNews.layoutManager = LinearLayoutManager(this)
-            recyclerViewNews.adapter = NewsDataAdapter(newsData.articles, this)
+    override fun onFragmentInit(fragment: Any) {
+        supportFragmentManager.inTransaction {
+            add(R.id.containerFragment, fragment as android.support.v4.app.Fragment)
         }
     }
 

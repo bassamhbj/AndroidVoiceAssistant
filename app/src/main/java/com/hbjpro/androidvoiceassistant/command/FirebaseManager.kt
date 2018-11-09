@@ -10,42 +10,38 @@ class FirebaseManager {
 
     private val MESSAGE_LIST_KEY = "message_list"
 
-    fun createNewMessage(message: MessageData, callback: CreateMessageCallback){
+    fun createNewMessage(message: MessageData, callback: FirebaseCallback<String, MessageData?>){
         FirebaseClient.getDatabaseReference()
                 .child(MESSAGE_LIST_KEY)
                 .child(message.id)
                 .setValue(message)
                 .addOnCompleteListener {
-                    callback.onSuccess()
+                    callback.onSuccess("")
                 }
                 .addOnFailureListener {
-                    callback.onError()
+                    callback.onError("")
                 }
     }
 
-    fun listenForNewData(callback: NewDataLoadCallback){
+    fun listenForNewData(callback: FirebaseCallback<String, MessageData?>){
         FirebaseClient.getDatabaseReference()
                 .addValueEventListener(object: ValueEventListener{
                     override fun onCancelled(p0: DatabaseError) {
-                        callback.onError()
+                        callback.onError("")
                     }
 
                     override fun onDataChange(p0: DataSnapshot) {
                         var list = p0.child(MESSAGE_LIST_KEY).children
                                 ?.map { it?.getValue(MessageData::class.java) }
 
-                        callback.onNewDataLoad(list)
+                        callback.onSuccess(list)
                     }
                 })
     }
 
-    interface CreateMessageCallback{
-        fun onSuccess()
-        fun onError()
-    }
-
-    interface NewDataLoadCallback{
-        fun onNewDataLoad(listMessage: List<MessageData?>)
-        fun onError()
+    interface FirebaseCallback<T, A>{
+        fun onSuccess(result: T) { /* Default implementation - Do Nothing */ }
+        fun onSuccess(result: List<A>) { /* Default implementation - Do Nothing */ }
+        fun onError(errorMsg: String)
     }
 }

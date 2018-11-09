@@ -16,7 +16,7 @@ class ModuleSpeech {
     }
 
     private lateinit var _languageCode: Tools.LanguageCode
-    private var _speechRecognizer:SpeechRecognizer = SpeechRecognizer.createSpeechRecognizer(SubApplication.instance)
+    private var _speechRecognizer:SpeechRecognizer = SpeechRecognizer.createSpeechRecognizer(SubApplication.context)
 
     /* --- Public Methods --- */
     fun setSpeechRecognizer(languageCode: Tools.LanguageCode){

@@ -1,6 +1,8 @@
 package com.hbjpro.androidvoiceassistant.presenter
 
+import android.app.Fragment
 import android.content.Intent
+import com.hbjpro.androidvoiceassistant.NewsFeedFragment
 import com.hbjpro.androidvoiceassistant.data.NewsData
 import com.hbjpro.androidvoiceassistant.model.ModelSpeech
 import com.hbjpro.androidvoiceassistant.speech.SpeechResult
@@ -17,12 +19,15 @@ class MainViewPresent(val view: MainViewListener){
             override fun onSuccess(speechResult: SpeechResult) {
                 when(speechResult.commandTy){
                     Tools.CommandTy.OPEN_APP ->{
-                        doExecuteOpenApp(speechResult.commandArgument)
+
                     }
                     Tools.CommandTy.NEWS_FEED -> {
-                        doExecuteGetNewsFeed()
+                        view.onFragmentInit(NewsFeedFragment())
                     }
                     Tools.CommandTy.SEARCH_INTERNET -> {}
+                    Tools.CommandTy.NOTES ->{
+
+                    }
                     Tools.CommandTy.INVALID -> {
                         view.onError("")
                     }
@@ -35,38 +40,10 @@ class MainViewPresent(val view: MainViewListener){
         }, languageCode)
     }
 
-    fun doExecuteOpenApp(appName: String){
-        _modelCommand.executeOpenApp(object: ModelCommand.CallbackOpenApp{
-            override fun onSuccess(intent: Intent) {
-                view.onOpenAppSuccess(intent)
-            }
-
-            override fun onError(errorMsg: String) {
-                view.onError("")
-            }
-        }, appName)
-    }
-
-    fun doExecuteGetNewsFeed(){
-        _modelCommand.executeGetNewsFeed(object: ModelCommand.CallbackNewsFeed{
-            override fun onSuccess(newsData: NewsData) {
-                view.onGetNewsFeedSuccess(newsData)
-            }
-
-            override fun onError(errorMsg: String) {
-                view.onError("")
-            }
-        })
-    }
-
     interface MainViewListener{
-        // hacerlo con genericos
-
         fun onSpeechResultSuccess(speechText: String)
 
-        fun onOpenAppSuccess(intent: Intent)
-
-        fun onGetNewsFeedSuccess(newsData: NewsData)
+        fun onFragmentInit(fragment: Any)
 
         fun onError(errorMsg: String)
     }

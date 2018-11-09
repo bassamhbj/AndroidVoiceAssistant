@@ -37,6 +37,7 @@ open class CommandBuilder {
         map["open"] = Tools.CommandTy.OPEN_APP
         map["search"] = Tools.CommandTy.SEARCH_INTERNET
         map["get news feed"] = Tools.CommandTy.NEWS_FEED
+        map["get notes"] = Tools.CommandTy.NOTES
 
         return map
     }
@@ -46,6 +47,7 @@ open class CommandBuilder {
         map["abrir"] = Tools.CommandTy.OPEN_APP
         map["busca"] = Tools.CommandTy.SEARCH_INTERNET
         map["noticias"] = Tools.CommandTy.NEWS_FEED
+        map["notas"] = Tools.CommandTy.NOTES
 
         return map
     }

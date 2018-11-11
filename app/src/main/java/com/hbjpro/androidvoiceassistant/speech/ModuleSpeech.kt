@@ -7,7 +7,7 @@ import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
 import android.util.Log
 import com.hbjpro.androidvoiceassistant.SubApplication
-import com.hbjpro.androidvoiceassistant.tools.Tools
+import com.hbjpro.androidvoiceassistant.common.tools.Tools
 
 class ModuleSpeech {
 

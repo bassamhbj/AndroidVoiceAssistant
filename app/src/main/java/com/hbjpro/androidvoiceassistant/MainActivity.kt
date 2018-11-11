@@ -10,9 +10,8 @@ import android.preference.PreferenceManager
 import android.support.design.widget.Snackbar
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import com.hbjpro.androidvoiceassistant.common.inTransaction
-import com.hbjpro.androidvoiceassistant.tools.Tools
+import com.hbjpro.androidvoiceassistant.common.tools.Tools
 import com.hbjpro.androidvoiceassistant.presenter.MainViewPresent
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -55,7 +54,7 @@ class MainActivity : AppCompatActivity(), MainViewPresent.MainViewListener  {
     private fun requestPermission(){
         if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.RECORD_AUDIO)
             || ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.INTERNET)){
-            Toast.makeText(applicationContext, "Please allow permission", Toast.LENGTH_SHORT).show()
+            setSnackBar("Please allow permission")
         }
 
         ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.RECORD_AUDIO), 1)

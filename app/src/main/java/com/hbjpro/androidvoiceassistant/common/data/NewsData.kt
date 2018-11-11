@@ -1,4 +1,4 @@
-package com.hbjpro.androidvoiceassistant.data
+package com.hbjpro.androidvoiceassistant.common.data
 
 import com.google.gson.annotations.SerializedName
 

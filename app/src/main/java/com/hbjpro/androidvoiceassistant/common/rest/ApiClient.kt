@@ -1,6 +1,6 @@
 package com.hbjpro.androidvoiceassistant.common.rest
 
-import com.hbjpro.androidvoiceassistant.tools.Tools
+import com.hbjpro.androidvoiceassistant.common.tools.Tools
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

@@ -1,18 +1,19 @@
-package com.hbjpro.androidvoiceassistant
+package com.hbjpro.androidvoiceassistant.adapter
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.hbjpro.androidvoiceassistant.data.Article
+import com.hbjpro.androidvoiceassistant.R
+import com.hbjpro.androidvoiceassistant.common.data.Article
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.list_view_item.view.*
+import kotlinx.android.synthetic.main.news_feed_item.view.*
 
 class NewsDataAdapter(val articlesList: List<Article>, val context: Context) : RecyclerView.Adapter<NewsDataAdapter.ViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(LayoutInflater.from(context).inflate(R.layout.list_view_item, parent, false))
+        return ViewHolder(LayoutInflater.from(context).inflate(R.layout.news_feed_item, parent, false))
     }
 
     override fun getItemCount(): Int {

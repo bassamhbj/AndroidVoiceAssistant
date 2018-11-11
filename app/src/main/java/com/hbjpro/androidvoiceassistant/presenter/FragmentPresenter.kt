@@ -1,34 +1,30 @@
 package com.hbjpro.androidvoiceassistant.presenter
 
 import android.content.Intent
-import com.hbjpro.androidvoiceassistant.data.Article
-import com.hbjpro.androidvoiceassistant.data.MessageData
-import com.hbjpro.androidvoiceassistant.data.NewsData
+import com.hbjpro.androidvoiceassistant.common.data.Article
+import com.hbjpro.androidvoiceassistant.common.data.MessageData
 import com.hbjpro.androidvoiceassistant.model.ModelCommand
 
 class FragmentPresenter {
 
-    fun doExecuteGetNewsFeed(view: ViewListener<NewsData, Article>){
+    fun doExecuteGetNewsFeed(view: ViewListener<List<Article>>){
         ModelCommand().apply {
-            executeGetNewsFeed(object: ModelCommand.CallbackCommand<NewsData, Article>{
-                override fun onSuccess(result: NewsData) {
-                    super.onSuccess(result)
-                }
-
-                override fun onSuccessList(result: List<Article>) {
-                    super.onSuccessList(result)
+            executeGetNewsFeed(object: ModelCommand.CallbackCommand<List<Article>>{
+                override fun onSuccess(result: List<Article>) {
+                    view.onSuccess(result)
                 }
 
                 override fun onError(errorMsg: String) {
-                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    view.onError(errorMsg)
+
                 }
             })
         }
     }
 
-    fun doExecuteOpenApp(appName: String, view: ViewListener<Intent, Any>){
+    fun doExecuteOpenApp(appName: String, view: ViewListener<Intent>){
         ModelCommand().apply {
-            executeOpenApp(appName, object: ModelCommand.CallbackCommand<Intent, Any>{
+            executeOpenApp(appName, object: ModelCommand.CallbackCommand<Intent>{
                 override fun onSuccess(result: Intent) {
                     view.onSuccess(result)
                 }
@@ -40,9 +36,9 @@ class FragmentPresenter {
         }
     }
 
-    fun doExecuteCreateNewMessage(messageData: MessageData, view: ViewListener<String, MessageData?>){
+    fun doExecuteCreateNewMessage(messageData: MessageData, view: ViewListener<String>){
         ModelCommand().apply {
-            executeCreateNewMessage(messageData, object: ModelCommand.CallbackCommand<String, MessageData?>{
+            executeCreateNewMessage(messageData, object: ModelCommand.CallbackCommand<String>{
                 override fun onSuccess(result: String) {
                     view.onSuccess(result)
                 }
@@ -54,11 +50,11 @@ class FragmentPresenter {
         }
     }
 
-    fun doExecuteNotesListener(view: ViewListener<String, MessageData?>){
+    fun doExecuteMessageListener(view: ViewListener<List<MessageData?>>){
         ModelCommand().apply {
-            executeNotesListener(object: ModelCommand.CallbackCommand<String, MessageData?>{
-                override fun onSuccessList(result: List<MessageData?>) {
-                    view.onSuccessList(result)
+            executeMessageListener(object: ModelCommand.CallbackCommand<List<MessageData?>>{
+                override fun onSuccess(result: List<MessageData?>) {
+                    view.onSuccess(result)
                 }
 
                 override fun onError(errorMsg: String) {
@@ -68,9 +64,8 @@ class FragmentPresenter {
         }
     }
 
-    interface ViewListener<T, A>{
-        fun onSuccess(result: T) { /* Default implementation - Do Nothing */ }
-        fun onSuccessList(result: List<A>) { /* Default implementation - Do Nothing */ }
+    interface ViewListener<T>{
+        fun onSuccess(result: T)
         fun onError(errorMsg: String)
     }
 }

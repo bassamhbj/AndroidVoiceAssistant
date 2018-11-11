@@ -2,6 +2,7 @@ package com.hbjpro.androidvoiceassistant
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import com.hbjpro.androidvoiceassistant.fragment.SettingsFragment
 
 class SettingsActivity : AppCompatActivity() {
 

@@ -1,6 +1,6 @@
-package com.hbjpro.androidvoiceassistant.Interface
+package com.hbjpro.androidvoiceassistant.`interface`
 
-import com.hbjpro.androidvoiceassistant.data.NewsData
+import com.hbjpro.androidvoiceassistant.common.data.NewsData
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query

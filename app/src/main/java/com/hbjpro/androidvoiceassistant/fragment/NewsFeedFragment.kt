@@ -1,23 +1,28 @@
-package com.hbjpro.androidvoiceassistant
+package com.hbjpro.androidvoiceassistant.fragment
 
 import android.content.Context
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.hbjpro.androidvoiceassistant.data.Article
+import com.hbjpro.androidvoiceassistant.adapter.NewsDataAdapter
+import com.hbjpro.androidvoiceassistant.R
+import com.hbjpro.androidvoiceassistant.common.data.Article
 import com.hbjpro.androidvoiceassistant.presenter.FragmentPresenter
+import kotlinx.android.synthetic.main.fragment_news_feed.*
 
-class NewsFeedFragment : Fragment(), FragmentPresenter.ListListener<Article> {
+class NewsFeedFragment : Fragment(), FragmentPresenter.ViewListener<List<Article>> {
 
     private val _presenter = FragmentPresenter()
-    private lateinit var recyclerView:RecyclerView
+    private lateinit var recyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        _presenter.doExecuteGetNewsFeed(this)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -30,25 +35,24 @@ class NewsFeedFragment : Fragment(), FragmentPresenter.ListListener<Article> {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        _presenter.doExecuteGetNewsFeed(this)
     }
 
     override fun onDetach() {
         super.onDetach()
     }
 
-
-    // OVERRIDE METHODS
-    override fun onSuccess(msg: String) {
-
+    private fun setSnackBar(text: String){
+        Snackbar.make(news_feed_layout, text, Snackbar.LENGTH_SHORT).show()
     }
 
-    override fun onLoadListSuccess(list: List<Article>) {
+    /* --- Override Methods ---*/
+    override fun onSuccess(list: List<Article>) {
         recyclerView.layoutManager = LinearLayoutManager(activity)
         recyclerView.adapter = NewsDataAdapter(list, activity!!.applicationContext)
+        setSnackBar("News Feed Headlines loaded")
     }
 
     override fun onError(errorMsg: String) {
-
+        setSnackBar(errorMsg)
     }
 }

@@ -2,7 +2,7 @@ package com.hbjpro.androidvoiceassistant.model
 
 import com.hbjpro.androidvoiceassistant.speech.ModuleSpeech
 import com.hbjpro.androidvoiceassistant.speech.SpeechResult
-import com.hbjpro.androidvoiceassistant.tools.Tools
+import com.hbjpro.androidvoiceassistant.common.tools.Tools
 
 class ModelSpeech {
 

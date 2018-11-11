@@ -1,6 +1,6 @@
 package com.hbjpro.androidvoiceassistant.speech
 
-import com.hbjpro.androidvoiceassistant.tools.Tools
+import com.hbjpro.androidvoiceassistant.common.tools.Tools
 
 data class SpeechResult(
         var message: String, // Speech input full text

@@ -4,43 +4,46 @@ import android.content.Intent
 import com.hbjpro.androidvoiceassistant.command.FirebaseManager
 import com.hbjpro.androidvoiceassistant.command.ModuleApp
 import com.hbjpro.androidvoiceassistant.command.ModuleNews
-import com.hbjpro.androidvoiceassistant.data.Article
-import com.hbjpro.androidvoiceassistant.data.MessageData
-import com.hbjpro.androidvoiceassistant.data.NewsData
+import com.hbjpro.androidvoiceassistant.common.data.Article
+import com.hbjpro.androidvoiceassistant.common.data.MessageData
+import com.hbjpro.androidvoiceassistant.common.data.NewsData
 
 class ModelCommand {
 
-    fun executeOpenApp(appName: String, callback: CallbackCommand<Intent, Any>){
+    fun executeOpenApp(appName: String, callback: CallbackCommand<Intent>){
         ModuleApp().apply {
-            var intent = getAppLaunchIntent(appName)
-            if(intent != null){
-                callback.onSuccess(intent)
-            }else{
-                callback.onError("")
-            }
+            getAppLaunchIntent(appName, object: ModuleApp.AppCallback<Intent>{
+                override fun onSuccess(result: Intent) {
+                    callback.onSuccess(result)
+                }
+
+                override fun onError(errorMsg: String) {
+                    callback.onError(errorMsg)
+                }
+            })
         }
 
     }
 
-    fun executeGetNewsFeed(callback: CallbackCommand<NewsData, Article>){
+    fun executeGetNewsFeed(callback: CallbackCommand<List<Article>>){
         ModuleNews().apply {
             getNewsFeed(object: ModuleNews.NewsModuleCallback{
                 override fun onSuccess(newsData: NewsData) {
-                    callback.onSuccessList(newsData.articles)
+                    callback.onSuccess(newsData.articles)
                 }
 
                 override fun onError(errorMsg: String) {
-                    callback.onError("")
+                    callback.onError(errorMsg)
                 }
             })
         }
     }
 
-    fun executeCreateNewMessage(messageData: MessageData, callback: CallbackCommand<String, MessageData?>){
+    fun executeCreateNewMessage(messageData: MessageData, callback: CallbackCommand<String>){
         FirebaseManager().apply {
-            createNewMessage(messageData, object: FirebaseManager.FirebaseCallback<String, MessageData?>{
+            createNewMessage(messageData, object: FirebaseManager.FirebaseCallback<String>{
                 override fun onSuccess(result: String) {
-                    onSuccess(result)
+                    callback.onSuccess(result)
                 }
 
                 override fun onError(errorMsg: String) {
@@ -50,11 +53,11 @@ class ModelCommand {
         }
     }
 
-    fun executeNotesListener(callback: CallbackCommand<String, MessageData?>){
+    fun executeMessageListener(callback: CallbackCommand<List<MessageData?>>){
         FirebaseManager().apply {
-            listenForNewData(object: FirebaseManager.FirebaseCallback<String, MessageData?>{
+            listenForNewData(object: FirebaseManager.FirebaseCallback<List<MessageData?>>{
                 override fun onSuccess(result: List<MessageData?>) {
-                    callback.onSuccessList(result)
+                    callback.onSuccess(result)
                 }
 
                 override fun onError(errorMsg: String) {
@@ -64,10 +67,8 @@ class ModelCommand {
         }
     }
 
-    // ADD GENERIC INTERFACE
-    interface CallbackCommand<T, A>{
-        fun onSuccess(result: T) { /* Default implementation - Do Nothing */ }
-        fun onSuccessList(result: List<A>) { /* Default implementation - Do Nothing */ }
+    interface CallbackCommand<T>{
+        fun onSuccess(result: T)
         fun onError(errorMsg: String)
     }
 }

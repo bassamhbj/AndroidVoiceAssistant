@@ -1,35 +1,37 @@
 package com.hbjpro.androidvoiceassistant.presenter
 
-import android.app.Fragment
-import android.content.Intent
-import com.hbjpro.androidvoiceassistant.NewsFeedFragment
-import com.hbjpro.androidvoiceassistant.data.NewsData
+import com.hbjpro.androidvoiceassistant.fragment.AppFragment
+import com.hbjpro.androidvoiceassistant.fragment.MessageFragment
+import com.hbjpro.androidvoiceassistant.fragment.NewsFeedFragment
 import com.hbjpro.androidvoiceassistant.model.ModelSpeech
 import com.hbjpro.androidvoiceassistant.speech.SpeechResult
-import com.hbjpro.androidvoiceassistant.tools.Tools
-import com.hbjpro.androidvoiceassistant.model.ModelCommand
+import com.hbjpro.androidvoiceassistant.common.tools.Tools
 
 class MainViewPresent(val view: MainViewListener){
 
     var _modelSpeech = ModelSpeech()
-    var _modelCommand = ModelCommand()
 
     fun doSpeechRecognition(languageCode: Tools.LanguageCode){
         _modelSpeech.startSpeech(object: ModelSpeech.ModelSpeechCallback{
             override fun onSuccess(speechResult: SpeechResult) {
+                view.onSpeechResultSuccess(speechResult.message)
+
                 when(speechResult.commandTy){
                     Tools.CommandTy.OPEN_APP ->{
-
+                        view.onFragmentInit(AppFragment.newInstance(speechResult.commandArgument))
                     }
                     Tools.CommandTy.NEWS_FEED -> {
                         view.onFragmentInit(NewsFeedFragment())
                     }
                     Tools.CommandTy.SEARCH_INTERNET -> {}
-                    Tools.CommandTy.NOTES ->{
-
+                    Tools.CommandTy.MESSAGE ->{
+                        view.onFragmentInit(MessageFragment.newInstance("", false))
+                    }
+                    Tools.CommandTy.NEW_MESSAGE ->{
+                        view.onFragmentInit(MessageFragment.newInstance(speechResult.commandArgument, true))
                     }
                     Tools.CommandTy.INVALID -> {
-                        view.onError("")
+                        view.onError("Invalid Command")
                     }
                 }
             }

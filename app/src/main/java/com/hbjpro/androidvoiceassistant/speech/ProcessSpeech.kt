@@ -1,6 +1,6 @@
 package com.hbjpro.androidvoiceassistant.speech
 
-import com.hbjpro.androidvoiceassistant.command.CommandBuilder
+import com.hbjpro.androidvoiceassistant.commandfactory.CommandFactory
 import com.hbjpro.androidvoiceassistant.common.tools.Tools
 
 class ProcessSpeech {
@@ -13,11 +13,10 @@ class ProcessSpeech {
     fun processText(text:String, languageCode: Tools.LanguageCode): SpeechResult{
         var speechResult = SpeechResult(text, false, "", Tools.CommandTy.INVALID, "", languageCode)
 
-        var commandBuilder = CommandBuilder().apply {
-            createMapOrder(languageCode)
-        }
+        var commandFactory = CommandFactory.createCommandMap(languageCode)
+        var mapOrder = commandFactory.createMap()
 
-        var regexStr = getRegexString(commandBuilder.getKeyWord(languageCode), commandBuilder._mapOrder)
+        var regexStr = getRegexString(commandFactory.getKeyWord(), mapOrder)
         var regex = Regex(regexStr, RegexOption.IGNORE_CASE)
 
         if(regex.containsMatchIn(text)){
@@ -26,7 +25,7 @@ class ProcessSpeech {
 
             if(result != null){
                 speechResult.command = result?.groups[1]!!.value.toLowerCase()
-                speechResult.commandTy = commandBuilder.findOrder(speechResult.command)
+                speechResult.commandTy = findOrder(speechResult.command, mapOrder)
                 speechResult.commandArgument = text.substring((result?.value)!!.length).trim().toLowerCase()
             }
         }
@@ -42,5 +41,9 @@ class ProcessSpeech {
         var regexStr = "^" + keyWord + """\s(""" + commandWord.substring(0, commandWord.length - 1) + ")"
 
         return regexStr
+    }
+
+    private fun findOrder(order:String, mapOrder: HashMap<String, Tools.CommandTy>): Tools.CommandTy{
+        return mapOrder.getOrElse(order) { Tools.CommandTy.INVALID}
     }
 }

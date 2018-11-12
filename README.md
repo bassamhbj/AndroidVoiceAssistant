@@ -70,7 +70,22 @@ Command:
 voice open Facebook
 ```
 
-Open any installed app in the phone:
+Open any installed app in the phone.
+
+### ProcessSpeech
+The ProcessSpeech use Regex String for find matching patterns with the availabe commands.
+```
+/^voice\s(open|get news feed|get message)/
+```
+
+This Regex String is formed for 2 groups:
+- First Group: `voice`
+  Checks if the first word is the Key word
+- Second Group: `(open|get news feed|get message)`
+  All the availabe commands, usings OR filter checks is the words after the Key word are a valid command
+
+If the Speech input is a valid command, all the words after the Second Group are the Command Argument.
+The Command Argument is used for the content of a new message or the name of the app to be opened.
 
 ## Architecture
 

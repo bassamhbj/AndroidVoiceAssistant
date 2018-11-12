@@ -40,7 +40,7 @@ Command:
 voice get news feed
 ```
 
-APi:
+API:
 
 ```
 https://newsapi.org/s/google-news-api
@@ -72,7 +72,7 @@ voice open Facebook
 
 Open any installed app in the phone:
 
-##Architecture
+## Architecture
 
 ### MVP
 The View is formed by the MainActivity and 3 Fragments: NewsFeedFragment, MessageFragment and AppFragment.

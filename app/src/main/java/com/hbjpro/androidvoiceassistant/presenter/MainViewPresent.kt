@@ -16,22 +16,24 @@ class MainViewPresent(val view: MainViewListener){
             override fun onSuccess(speechResult: SpeechResult) {
                 view.onSpeechResultSuccess(speechResult.message)
 
-                when(speechResult.commandTy){
-                    Tools.CommandTy.OPEN_APP ->{
-                        view.onFragmentInit(AppFragment.newInstance(speechResult.commandArgument))
-                    }
-                    Tools.CommandTy.NEWS_FEED -> {
-                        view.onFragmentInit(NewsFeedFragment())
-                    }
-                    Tools.CommandTy.SEARCH_INTERNET -> {}
-                    Tools.CommandTy.MESSAGE ->{
-                        view.onFragmentInit(MessageFragment.newInstance("", false))
-                    }
-                    Tools.CommandTy.NEW_MESSAGE ->{
-                        view.onFragmentInit(MessageFragment.newInstance(speechResult.commandArgument, true))
-                    }
-                    Tools.CommandTy.INVALID -> {
-                        view.onError("Invalid Command")
+                if(speechResult.isKeyWord){
+                    when(speechResult.commandTy){
+                        Tools.CommandTy.OPEN_APP ->{
+                            view.onFragmentInit(AppFragment.newInstance(speechResult.commandArgument))
+                        }
+                        Tools.CommandTy.NEWS_FEED -> {
+                            view.onFragmentInit(NewsFeedFragment())
+                        }
+                        Tools.CommandTy.SEARCH_INTERNET -> {}
+                        Tools.CommandTy.MESSAGE ->{
+                            view.onFragmentInit(MessageFragment.newInstance("", false))
+                        }
+                        Tools.CommandTy.NEW_MESSAGE ->{
+                            view.onFragmentInit(MessageFragment.newInstance(speechResult.commandArgument, true))
+                        }
+                        Tools.CommandTy.INVALID -> {
+                            view.onError("Invalid Command")
+                        }
                     }
                 }
             }

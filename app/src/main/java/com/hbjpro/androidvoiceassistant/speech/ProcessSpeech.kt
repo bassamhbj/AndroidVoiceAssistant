@@ -25,7 +25,7 @@ class ProcessSpeech {
 
             if(result != null){
                 speechResult.command = result?.groups[1]!!.value.toLowerCase()
-                speechResult.commandTy = findOrder(speechResult.command, mapOrder)
+                speechResult.commandTy = mapOrder.getOrElse(speechResult.command) { Tools.CommandTy.INVALID}
                 speechResult.commandArgument = text.substring((result?.value)!!.length).trim().toLowerCase()
             }
         }
@@ -34,16 +34,13 @@ class ProcessSpeech {
     }
 
     /* --- Private Methods --- */
+    /*
+     Regex String = /^voice\s(open|get news feed|get message)/
+     */
     private fun getRegexString(keyWord: String, commandMap: HashMap<String, Tools.CommandTy>): String{
         var commandWord = ""
         commandMap.forEach { it -> commandWord += it.key + "|"  }
 
-        var regexStr = "^" + keyWord + """\s(""" + commandWord.substring(0, commandWord.length - 1) + ")"
-
-        return regexStr
-    }
-
-    private fun findOrder(order:String, mapOrder: HashMap<String, Tools.CommandTy>): Tools.CommandTy{
-        return mapOrder.getOrElse(order) { Tools.CommandTy.INVALID}
+        return "^" + keyWord + """\s(""" + commandWord.substring(0, commandWord.length - 1) + ")"
     }
 }

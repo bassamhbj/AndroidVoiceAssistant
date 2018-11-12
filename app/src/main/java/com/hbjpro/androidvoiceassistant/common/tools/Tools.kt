@@ -2,10 +2,6 @@ package com.hbjpro.androidvoiceassistant.common.tools
 
 class Tools {
 
-    companion object {
-        val NEWS_API_BASE_URL: String = "https://newsapi.org/"
-    }
-
     enum class LanguageCode(val value: String){
         ENGLISH_AMERICA("en-US"),
         SPANISH("es-ES"),
